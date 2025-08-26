@@ -1,0 +1,20 @@
+{
+  "name": "litex-benchmark",
+  "version": "1.0.0",
+  "description": "Complete benchmark suite for LiteX framework vs all alternatives",
+  "scripts": {
+    "test:litex": "node litex-test.js",
+    "test:express": "node express-test.js",
+    "test:hyper": "node hyper-express.js",
+    "test:node": "node node-test.js",
+    "benchmark:complete": "powershell -ExecutionPolicy Bypass -File complete-benchmark.ps1",
+    "benchmark:parallel": "powershell -ExecutionPolicy Bypass -File parallel-all-frameworks.ps1",
+    "benchmark:quick": "powershell -ExecutionPolicy Bypass -File quick-parallel-test.ps1",
+    "benchmark": "npm run benchmark:complete"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "hyper-express": "^6.17.3",
+    "ultimate-express": "^2.0.9"
+  }
+}
