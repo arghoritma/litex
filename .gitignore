@@ -1,5 +1,4 @@
 node_modules
 # Keep environment variables out of version control
-.env 
-production.sqlite3
-dev.sqlite3
+.env
+db

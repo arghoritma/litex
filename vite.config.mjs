@@ -2,48 +2,59 @@ import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import 'dotenv/config'
 import { resolve } from 'path'
-import { readdirSync } from 'fs';
+import { readdirSync } from 'fs'
 
-const files = readdirSync("resources/views");
+// Constants
+const VIEWS_DIR = 'resources/views'
+const DEFAULT_PORT = 3000
+const PORT = parseInt(process.env.VITE_PORT) || DEFAULT_PORT
 
-let input = {};
-
-for (const filename of files) {
-  input[filename.replace(".html", "")] = resolve(__dirname, `resources/views/${filename}`);
+// Generate input entries from HTML files
+function generateInputEntries() {
+  try {
+    const files = readdirSync(VIEWS_DIR)
+    return files.reduce((input, filename) => {
+      const key = filename.replace('.html', '')
+      input[key] = resolve(process.cwd(), `${VIEWS_DIR}/${filename}`)
+      return input
+    }, {})
+  } catch (error) {
+    console.error(`Error reading views directory: ${error.message}`)
+    return {}
+  }
 }
 
-// Default port from environment or fallback to 3000
-const PORT = parseInt(process.env.VITE_PORT) || 3000;
- 
-// https://vite.dev/config/
+// Port error handling plugin
+function createPortHandlingPlugin() {
+  return {
+    name: 'port-handling',
+    configureServer(server) {
+      server.httpServer?.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          console.error(`\x1b[31mError: Port ${PORT} is already in use. Shutting down server.\x1b[0m`)
+          process.exit(1)
+        }
+      })
+    }
+  }
+}
+
 export default defineConfig({
   plugins: [
     svelte(),
-    {
-      name: 'port-handling',
-      configureServer(server) {
-        // Handle server startup errors
-        server.httpServer?.on('error', (err) => {
-          if (err.code === 'EADDRINUSE') {
-            console.error(`\x1b[31mError: Vite Port ${PORT} is already in use. Shutting down server.\x1b[0m`);
-            // Exit the process with an error code
-            process.exit(1);
-          }
-        });
-      }
-    }
+    createPortHandlingPlugin()
   ],
   root: 'resources',
   server: {
     host: '0.0.0.0',
     port: PORT,
-    strictPort: true // Don't allow Vite to automatically try the next available port
+    strictPort: true
   },
   build: {
     outDir: '../dist',
     emptyOutDir: true,
     rollupOptions: {
-      input: input
+      input: generateInputEntries()
     }
   }
-});
+})

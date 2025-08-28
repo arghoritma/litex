@@ -331,7 +331,7 @@ This link will expire in 24 hours.
          console.log(error);
          return response
             .cookie("error", "Maaf, Email sudah terdaftar", { maxAge: 3000 })
-            .redirect("/register");
+            .redirect("/auth/register");
       }
    }
 

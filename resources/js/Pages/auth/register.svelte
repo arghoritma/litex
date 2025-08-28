@@ -21,7 +21,7 @@
     }
  
     form.phone = form.phone.toString()
-    router.post("/register", form)
+    router.post("/auth/register", form)
   }
 
   function generatePassword()

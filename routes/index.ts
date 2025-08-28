@@ -1,15 +1,15 @@
 import HomeController from "../app/controllers/HomeController";
 import AssetController from "../app/controllers/AssetController";
 import { Router } from 'ultimate-express';
-import ApiRoutes from './api';
+
 import AuthRoutes from './authRoutes';
 import ProtectedRoutes from './protectedRoutes';
-
+import ApiRoutes from './api'
 const Route = Router();
 
-Route.use("/api", ApiRoutes);
 Route.use("/auth", AuthRoutes);
 Route.use("/protected", ProtectedRoutes);
+Route.use("/api", ApiRoutes);
 
 /**
  * Public Routes
