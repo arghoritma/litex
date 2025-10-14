@@ -36,10 +36,9 @@ if (process.env.NODE_ENV == "development") {
 }
 
 /**
- * Recursively imports and compiles template files from the views directory
- * Handles both regular templates and partials (reusable template components)
  * @param nextDirectory - Directory to scan for template files
  */
+
 function importFiles(nextDirectory = "resources/views") {
    try {
       if (!statSync(nextDirectory).isDirectory()) {

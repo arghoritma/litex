@@ -41,7 +41,7 @@
 
 ## Project Structure
 
-studio/
+project-root/
 ├── app/ # Core application code
 │ ├── controllers/ # Request handlers
 │ ├── middlewares/ # Authentication & validation

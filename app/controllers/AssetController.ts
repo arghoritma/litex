@@ -1,5 +1,6 @@
 import { Response, Request } from "../../type";
 import fs from "fs";
+import { view } from "../services/View";
 
 // Cache object to store file contents in memory
 let cache: { [key: string]: Buffer } = {};
@@ -91,7 +92,7 @@ class Controller {
 
         // Check if the path has any extension
         if (!path.includes(".")) {
-            return response.status(404).send("Page not found");
+            return response.status(404).send(view("not-found.html"));
         }
 
         // Security check: validate file extension
