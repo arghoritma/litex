@@ -32,12 +32,14 @@ const Sqrl = __importStar(require("squirrelly"));
 const path_1 = __importDefault(require("path"));
 require("dotenv").config();
 let html_files = {};
-let directory = process.env.NODE_ENV == 'development' ? "resources/views" : "dist/views";
-if (process.env.NODE_ENV == 'development') {
+let directory = process.env.NODE_ENV == "development" ? "resources/views" : "dist/views";
+if (process.env.NODE_ENV == "development") {
     const chokidar = require("chokidar");
-    var watcher = chokidar.watch('resources/views', { ignored: /^\./, persistent: true });
-    watcher
-        .on('change', (path) => {
+    var watcher = chokidar.watch("resources/views", {
+        ignored: /^\./,
+        persistent: true,
+    });
+    watcher.on("change", (path) => {
         importFiles(directory);
     });
 }
@@ -63,7 +65,7 @@ function importFiles(nextDirectory = "resources/views") {
         }
     }
     catch (error) {
-        if (error.code === 'ENOENT') {
+        if (error.code === "ENOENT") {
             throw new Error(`Views directory not found: ${nextDirectory}. Please make sure the directory exists.`);
         }
         throw error;
@@ -72,14 +74,14 @@ function importFiles(nextDirectory = "resources/views") {
 function view(filename, view_data) {
     const keys = Object.keys(view_data || {});
     let html = html_files[directory + "/" + filename];
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV == "development") {
         const files = (0, fs_1.readdirSync)("resources/js");
         for (const filename of files) {
             html = html.replace("/js/" + filename, `http://localhost:${process.env.VITE_PORT}/js/${filename}`);
         }
     }
     html = Sqrl.render(html, {
-        ...view_data
+        ...view_data,
     });
     return html;
 }

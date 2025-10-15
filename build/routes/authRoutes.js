@@ -3,13 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ultimate_express_1 = require("ultimate-express");
 const AuthController_1 = __importDefault(require("../app/controllers/AuthController"));
-const auth_1 = __importDefault(require("../app/middlewares/auth"));
-const HomeController_1 = __importDefault(require("../app/controllers/HomeController"));
-const AssetController_1 = __importDefault(require("../app/controllers/AssetController"));
-const hyper_express_1 = __importDefault(require("hyper-express"));
-const Route = new hyper_express_1.default.Router();
-Route.get("/", HomeController_1.default.index);
+const Route = (0, ultimate_express_1.Router)();
 Route.get("/login", AuthController_1.default.loginPage);
 Route.post("/login", AuthController_1.default.processLogin);
 Route.get("/register", AuthController_1.default.registerPage);
@@ -21,12 +17,5 @@ Route.get("/forgot-password", AuthController_1.default.forgotPasswordPage);
 Route.post("/forgot-password", AuthController_1.default.sendResetPassword);
 Route.get("/reset-password/:id", AuthController_1.default.resetPasswordPage);
 Route.post("/reset-password", AuthController_1.default.resetPassword);
-Route.get("/home", [auth_1.default], AuthController_1.default.homePage);
-Route.get("/profile", [auth_1.default], AuthController_1.default.profilePage);
-Route.post("/change-profile", [auth_1.default], AuthController_1.default.changeProfile);
-Route.post("/change-password", [auth_1.default], AuthController_1.default.changePassword);
-Route.delete("/users", [auth_1.default], AuthController_1.default.deleteUsers);
-Route.get("/assets/:file", AssetController_1.default.distFolder);
-Route.get("/*", AssetController_1.default.publicFolder);
 exports.default = Route;
-//# sourceMappingURL=web.js.map
+//# sourceMappingURL=authRoutes.js.map

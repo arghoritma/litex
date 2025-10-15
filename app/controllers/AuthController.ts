@@ -74,7 +74,9 @@ class AuthController {
    }
 
    public async profilePage(request: Request, response: Response) {
-      return response.inertia("profile");
+      const user = request.user;
+
+      return response.inertia("profile", { user });
    }
 
    public async changeProfile(request: Request, response: Response) {
@@ -302,12 +304,12 @@ This link will expire in 24 hours.
          } else {
             return response
                .cookie("error", "Maaf, Password salah", { maxAge: 3000 })
-               .redirect("/login");
+               .redirect("/auth/login");
          }
       } else {
          return response
             .cookie("error", "Email/No.HP tidak terdaftar", { maxAge: 3000 })
-            .redirect("/login");
+            .redirect("/auth/login");
       }
    }
 
@@ -394,7 +396,7 @@ Link ini akan kadaluarsa dalam 24 jam.`,
    }
 
    public async logout(request: Request, response: Response) {
-      if (request.cookies.auth_id) {
+      if (request.cookies.auth_auth_token) {
          await Authenticate.logout(request, response);
       }
    }

@@ -2,13 +2,140 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{it.title}}</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-laju.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#764ba2"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="LiteX" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="LiteX" />
+    <meta name="msapplication-TileColor" content="#667eea" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <title>{{it.title}} - LiteX</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/js/index.css" />
   </head>
   <body>
     <div id="app" data-page="{{it.page}}"></div>
+
+    <!-- PWA Service Worker -->
+    <script>
+      // PWA Service Worker Registration for Inertia pages
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", async () => {
+          try {
+            const registration = await navigator.serviceWorker.register(
+              "/sw.js"
+            );
+            console.log(
+              "⚡ LiteX PWA: Service Worker registered for Inertia app:",
+              registration
+            );
+          } catch (error) {
+            console.error(
+              "⚠️ LiteX PWA: Service Worker registration failed:",
+              error
+            );
+          }
+        });
+      }
+
+      // PWA Install Prompt for Inertia pages
+      let deferredPrompt;
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Show install prompt if not on main page
+        if (!document.getElementById("pwa-install-btn")) {
+          const installBtn = document.createElement("button");
+          installBtn.id = "pwa-install-btn";
+          installBtn.innerHTML = "📱 Install LiteX";
+          installBtn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+          `;
+
+          installBtn.addEventListener("mouseover", () => {
+            installBtn.style.transform = "translateY(-2px)";
+            installBtn.style.boxShadow = "0 12px 35px rgba(102, 126, 234, 0.4)";
+          });
+
+          installBtn.addEventListener("mouseout", () => {
+            installBtn.style.transform = "translateY(0)";
+            installBtn.style.boxShadow = "0 8px 25px rgba(102, 126, 234, 0.3)";
+          });
+
+          installBtn.addEventListener("click", async () => {
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              const { outcome } = await deferredPrompt.userChoice;
+              console.log("⚡ LiteX PWA: Install prompt outcome:", outcome);
+              deferredPrompt = null;
+              installBtn.remove();
+            }
+          });
+
+          document.body.appendChild(installBtn);
+        }
+      });
+
+      // Hide install button when app is installed
+      window.addEventListener("appinstalled", () => {
+        const installBtn = document.getElementById("pwa-install-btn");
+        if (installBtn) {
+          installBtn.remove();
+        }
+        console.log("⚡ LiteX PWA: App installed successfully");
+      });
+    </script>
 
     <script type="module" src="/js/main.js"></script>
   </body>

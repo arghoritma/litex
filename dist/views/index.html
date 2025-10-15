@@ -1,203 +1,920 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laju - Ship Your Next Project Faster</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-laju.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-  <script type="module" crossorigin src="/assets/app-DBunUjIg.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/app-CmJ42KVB.css">
-</head>
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#764ba2"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="LiteX" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="LiteX" />
+    <meta name="msapplication-TileColor" content="#667eea" />
+    <meta name="msapplication-tap-highlight" content="no" />
 
-<body class="bg-gray-50 font-['Inter']">
-    <!-- Hero Section -->
-    <div class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-emerald-100 z-0"></div>
-        <nav class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-            <div class="flex justify-between items-center">
-                <div class="text-3xl font-bold text-emerald-600">
-                    <img class="h-14" src="/laju-logo.png" alt="">
-                </div>
-                <div class="flex space-x-6">
-                    <a href="https://github.com/maulanashalihin/laju"
-                        class="text-gray-600 hover:text-gray-900">GitHub</a>
-                    <a href="/login" class="text-gray-600 hover:text-gray-900">Login</a>
-                    <a href="/register" class="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700">Get
-                        Started</a>
-                </div>
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="LiteX - Ultra-fast TypeScript framework with Svelte 5 & Ultimate Express. Build modern full-stack applications with blazing performance."
+    />
+    <meta
+      name="keywords"
+      content="LiteX, TypeScript, Svelte 5, Ultimate Express, web framework, full-stack, performance, PWA"
+    />
+    <meta name="author" content="LiteX Team" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta
+      property="og:title"
+      content="⚡ LiteX - Ultra-Fast TypeScript Framework"
+    />
+    <meta
+      property="og:description"
+      content="Build modern full-stack applications with blazing performance using LiteX framework."
+    />
+    <meta property="og:image" content="/icons/android-chrome-512x512.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="/" />
+    <meta
+      property="twitter:title"
+      content="⚡ LiteX - Ultra-Fast TypeScript Framework"
+    />
+    <meta
+      property="twitter:description"
+      content="Build modern full-stack applications with blazing performance using LiteX framework."
+    />
+    <meta
+      property="twitter:image"
+      content="/icons/android-chrome-512x512.png"
+    />
+
+    <title>⚡ LiteX - Ultra-Fast TypeScript Framework</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        color: white;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Performance optimizations */
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Prevent layout shift */
+      .container {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        -webkit-backdrop-filter: blur(20px);
+                backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+        transform: translateY(0);
+      }
+
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .text-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        color: white;
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 12px 26px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+        color: white;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.95);
+        -webkit-backdrop-filter: blur(20px);
+                backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        color: #333;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .stats-card {
+        background: rgba(255, 255, 255, 0.15);
+        -webkit-backdrop-filter: blur(20px);
+                backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        color: white;
+      }
+
+      .code-block {
+        background: rgba(0, 0, 0, 0.4);
+        -webkit-backdrop-filter: blur(20px);
+                backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+      }
+
+      .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 8px 16px;
+        border-radius: 25px;
+      }
+
+      .nav-link:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .floating-elements {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .floating-elements::before,
+      .floating-elements::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .floating-elements::before {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        right: 10%;
+        animation-delay: -2s;
+      }
+
+      .floating-elements::after {
+        width: 150px;
+        height: 150px;
+        bottom: 20%;
+        left: 5%;
+        animation-delay: -4s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      /* Enhanced Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .btn-primary,
+        .btn-secondary {
+          padding: 10px 20px;
+          font-size: 14px;
+          border-radius: 30px;
+        }
+
+        .floating-elements::before,
+        .floating-elements::after {
+          display: none;
+        }
+
+        .mobile-nav {
+          display: block;
+        }
+
+        .desktop-nav {
+          display: none;
+        }
+
+        .hero-title {
+          font-size: 2.5rem !important;
+          line-height: 1.2;
+        }
+
+        .hero-subtitle {
+          font-size: 1.1rem !important;
+          margin-bottom: 1rem;
+        }
+
+        .hero-description {
+          font-size: 0.95rem !important;
+          margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr 1fr !important;
+          gap: 1rem !important;
+        }
+
+        .stats-number {
+          font-size: 1.8rem !important;
+        }
+
+        .feature-grid {
+          grid-template-columns: 1fr !important;
+          gap: 1rem !important;
+        }
+
+        .feature-card {
+          padding: 1.5rem !important;
+        }
+
+        .code-block {
+          padding: 1rem !important;
+        }
+
+        .code-text {
+          font-size: 0.8rem !important;
+        }
+
+        .section-spacing {
+          margin-top: 3rem !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-title {
+          font-size: 2rem !important;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr !important;
+        }
+
+        .btn-group {
+          flex-direction: column !important;
+          gap: 0.75rem !important;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      /* Speed-themed animations */
+      .speed-animation {
+        animation: speedPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes speedPulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 0.9;
+        }
+      }
+
+      .fast-hover {
+        transition: all 0.15s ease;
+      }
+
+      .fast-hover:hover {
+        transform: translateY(-3px) scale(1.02);
+      }
+
+      /* Mobile navigation */
+      .mobile-menu {
+        display: none;
+      }
+
+      .mobile-menu.active {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.15);
+        -webkit-backdrop-filter: blur(20px);
+                backdrop-filter: blur(20px);
+        border-radius: 0 0 20px 20px;
+        padding: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: none;
+      }
+
+      .hamburger {
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .hamburger:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    </style>
+    <link rel="stylesheet" crossorigin href="/assets/index-DAkq-4nb.css">
+  </head>
+
+  <body>
+    <div class="relative min-h-screen">
+      <div class="floating-elements"></div>
+
+      <!-- Navigation -->
+      <nav class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="glass-effect rounded-2xl px-4 py-3">
+          <div class="flex justify-between items-center">
+            <div class="text-2xl font-bold">
+              <img class="h-8 sm:h-10" src="/litex.png" alt="LiteX" />
             </div>
-        </nav>
 
-        <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
-            <div class="text-center">
-                <h1 class="text-5xl font-bold text-gray-900 mb-6">
-                    Build Faster with <span class="text-emerald-600">Laju</span>
-                </h1>
-                <p class="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
-                    A high-performance TypeScript web framework for building modern full-stack applications with speed
-                    and elegance.
-                </p>
-                <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-                    <span class="italic">Laju</span> — Indonesian word for "fast" or "swift" — embodies our framework's
-                    core mission:
-                    delivering exceptional speed without compromising developer experience.
-                </p>
-                <div class="flex justify-center space-x-4 flex-wrap gap-4">
-                    <a href="#features" class="px-8 py-3 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700">
-                        Explore Features
-                    </a>
-                    <a href="https://github.com/maulanashalihin/laju"
-                        class="px-8 py-3 rounded-lg border border-gray-300 text-gray-700 hover:border-emerald-400 hover:text-emerald-600">
-                        View on GitHub
-                    </a>
-                </div>
+            <!-- Desktop Navigation -->
+            <div class="desktop-nav hidden md:flex space-x-2 items-center">
+              <a
+                href="https://github.com/arghoritma/litex"
+                class="nav-link fast-hover"
+                >GitHub</a
+              >
+              <a href="auth/login" class="nav-link fast-hover">Login</a>
+              <a href="auth/register" class="btn-primary fast-hover"
+                >Get Started</a
+              >
             </div>
 
-            <!-- Stats Section -->
-            <div class="mt-16 px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Blazing Fast Performance</h2>
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-200">
-                        <div class="p-4 md:p-6 text-center">
-                            <div class="text-2xl md:text-4xl font-bold text-emerald-600">254,595</div>
-                            <div class="text-sm text-gray-600 mt-2">Requests/s</div>
-                        </div>
-                        <div class="p-4 md:p-6 text-center">
-                            <div class="text-2xl md:text-4xl font-bold text-emerald-600">1.55ms</div>
-                            <div class="text-sm text-gray-600 mt-2">Latency</div>
-                        </div>
-                        <div class="p-4 md:p-6 text-center">
-                            <div class="text-2xl md:text-4xl font-bold text-emerald-600">21.12</div>
-                            <div class="text-sm text-gray-600 mt-2">MB/s Throughput</div>
-                        </div>
-                        <div class="p-4 md:p-6 text-center">
-                            <div class="text-2xl md:text-4xl font-bold text-emerald-600">100%</div>
-                            <div class="text-sm text-gray-600 mt-2">Faster than Node.js</div>
-                        </div>
-                    </div>
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav md:hidden">
+              <div class="hamburger" onclick="toggleMobileMenu()">
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </div>
+              <div id="mobile-menu" class="mobile-menu">
+                <div class="flex flex-col space-y-2">
+                  <a
+                    href="https://github.com/arghoritma/litex"
+                    class="nav-link text-center"
+                    >GitHub</a
+                  >
+                  <a href="auth/login" class="nav-link text-center">Login</a>
+                  <a href="auth/register" class="btn-primary text-center"
+                    >Get Started</a
+                  >
                 </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </nav>
 
-            <!-- Getting Started Section -->
-            <div class="mt-16">
-                <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Get Started in Seconds</h2>
-                <div class="max-w-3xl mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-center space-x-2 mb-4">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                        </div>
-                        <pre class="text-sm md:text-base !bg-gray-900"><code class="language-typescript bg-gray-900 text-gray-300">// app/controllers/HomeController.ts
-import { Response, Request } from "../../type";
-import { view } from "../services/View";
+      <!-- Hero Section -->
+      <main
+        class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16"
+      >
+        <div class="text-center">
+          <h1
+            class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 speed-animation"
+          >
+            Build <span class="text-yellow-300">⚡Super Fast</span><br />
+            <span class="text-white drop-shadow-lg">with LiteX</span>
+          </h1>
+          <p
+            class="hero-subtitle text-lg sm:text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto font-light"
+          >
+            LiteX - Ultra-fast TypeScript framework with
+            <strong>Svelte 5</strong> & <strong>Ultimate Express</strong>
+          </p>
+          <p
+            class="hero-description text-sm sm:text-base text-white/80 mb-8 max-w-2xl mx-auto"
+          >
+            🚀 Server-side rendering • ⚡ Real-time capabilities • 🎯 Seamless
+            state management
+          </p>
+          <div
+            class="btn-group flex justify-center flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 max-w-md mx-auto"
+          >
+            <a href="#features" class="btn-primary fast-hover"
+              >🚀 Explore Features</a
+            >
+            <a
+              href="https://github.com/arghoritma/litex"
+              class="btn-secondary fast-hover"
+              >⭐ GitHub</a
+            >
+          </div>
+        </div>
 
-class Controller {
-    public async index(request: Request, response: Response) {
-        return response.type("html").send(view("index.html"));
+        <!-- Stats Section -->
+        <div class="section-spacing mt-12">
+          <h2
+            class="text-2xl sm:text-3xl font-bold text-center text-white mb-8"
+          >
+            ⚡ Lightning Performance
+          </h2>
+          <div class="stats-card p-4 sm:p-6 rounded-2xl">
+            <div
+              class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+            >
+              <div class="text-center fast-hover">
+                <div
+                  class="stats-number text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-yellow-300"
+                >
+                  75K+
+                </div>
+                <div class="text-white/80 text-xs sm:text-sm">Requests/s</div>
+              </div>
+              <div class="text-center fast-hover">
+                <div
+                  class="stats-number text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-green-300"
+                >
+                  6.7x
+                </div>
+                <div class="text-white/80 text-xs sm:text-sm">Faster</div>
+              </div>
+              <div class="text-center fast-hover">
+                <div
+                  class="stats-number text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-blue-300"
+                >
+                  14MB/s
+                </div>
+                <div class="text-white/80 text-xs sm:text-sm">Throughput</div>
+              </div>
+              <div class="text-center fast-hover">
+                <div
+                  class="stats-number text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-purple-300"
+                >
+                  60K+
+                </div>
+                <div class="text-white/80 text-xs sm:text-sm">Avg req/s</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Example Section -->
+        <div class="section-spacing mt-12">
+          <h2
+            class="text-2xl sm:text-3xl font-bold text-center text-white mb-8"
+          >
+            🚀 Start in Seconds
+          </h2>
+          <div class="code-block p-4 sm:p-6 rounded-2xl">
+            <div class="flex items-center space-x-2 mb-4">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              <span class="text-white/60 text-xs ml-2">HomeController.ts</span>
+            </div>
+            <pre
+              class="code-text text-xs sm:text-sm overflow-x-auto"
+            ><code class="language-typescript text-gray-300">// ⚡ Ultra-fast setup
+import { Response, Request } from "ultimate-express";
+import { render } from "@inertiajs/svelte";
+
+class HomeController {
+    async index(req: Request, res: Response) {
+        return render(res, "Home", {
+            title: "⚡ LiteX Speed!"
+        });
     }
 }
 
-export default new Controller();
+export default new HomeController();
 
-// routes/web.ts
-import AuthController from "../app/controllers/AuthController"; 
-import HyperExpress from 'hyper-express';
+// 🚀 Route setup
+router.get("/", HomeController.index);</code></pre>
+          </div>
+          <div class="mt-6 text-center">
+            <p class="text-sm sm:text-base text-white/90 mb-4">
+              🎯 Zero config • 🚀 Instant setup • ⚡ Maximum speed
+            </p>
+            <a
+              href="https://github.com/arghoritma/litex"
+              class="text-yellow-300 hover:text-yellow-200 font-semibold fast-hover"
+            >
+              📖 Documentation →
+            </a>
+          </div>
+        </div>
 
-const Route = new HyperExpress.Router();
- 
-Route.get("/", HomeController.index); 
-</code></pre>
-                    </div>
-                </div>
-                <div class="mt-8 text-center">
-                    <p class="text-lg text-gray-600 mb-6">
-                        Just a few lines of code to get your server up and running. No complex configurations, no
-                        boilerplate.
-                    </p>
-                    <a href="https://github.com/maulanashalihin/laju.git" class="text-emerald-600 hover:text-emerald-700 font-semibold">
-                        View Documentation →
-                    </a>
-                </div>
+        <!-- Features Section -->
+        <div id="features" class="section-spacing mt-16">
+          <h2
+            class="text-2xl sm:text-3xl font-bold text-center text-white mb-8"
+          >
+            ⚡ Why LiteX is Super Fast?
+          </h2>
+          <div
+            class="feature-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          >
+            <div class="feature-card p-6 fast-hover">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">🎨</span>
+              </div>
+              <h3 class="text-xl font-bold mb-3 text-gradient">Frontend</h3>
+              <ul class="space-y-2 text-gray-600 text-sm">
+                <li class="flex items-center">
+                  <span class="text-purple-500 mr-2">⚡</span>Svelte 5
+                </li>
+                <li class="flex items-center">
+                  <span class="text-purple-500 mr-2">🔗</span>Inertia.js
+                </li>
+                <li class="flex items-center">
+                  <span class="text-purple-500 mr-2">🎯</span>TailwindCSS
+                </li>
+                <li class="flex items-center">
+                  <span class="text-purple-500 mr-2">⚡</span>Vite Bundle
+                </li>
+              </ul>
             </div>
 
-            <!-- Features Section -->
-            <div id="features" class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 px-4 sm:px-6 lg:px-8">
-                <div
-                    class="p-6 rounded-xl bg-white shadow-lg border border-gray-100 hover:border-emerald-200 transition-colors">
-                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <div class="text-emerald-600 text-xl font-semibold mb-4">Frontend</div>
-                    <ul class="space-y-3 text-gray-600">
-                        <li>• Svelte - Reactive UI framework</li>
-                        <li>• Inertia - Modern monolith</li>
-                        <li>• TailwindCSS - Utility-first CSS</li>
-                        <li>• Vite - Next gen bundling</li>
-                    </ul>
-                </div>
-                <div
-                    class="p-6 rounded-xl bg-white shadow-lg border border-gray-100 hover:border-emerald-200 transition-colors">
-                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <div class="text-emerald-600 text-xl font-semibold mb-4">Backend</div>
-                    <ul class="space-y-3 text-gray-600">
-                        <li>• Hyper Express - Ultra-fast server</li>
-                        <li>• TypeScript - Type safety</li>
-                        <li>• File Generator - Quick scaffolding</li>
-                        <li>• MVC Architecture</li>
-                    </ul>
-                </div>
-                <div
-                    class="p-6 rounded-xl bg-white shadow-lg border border-gray-100 hover:border-emerald-200 transition-colors">
-                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                        </svg>
-                    </div>
-                    <div class="text-emerald-600 text-xl font-semibold mb-4">Database</div>
-                    <ul class="space-y-3 text-gray-600">
-                        <li>• Knex.js - SQL query builder</li>
-                        <li>• Migrations support</li>
-                        <li>• Multiple DB support</li>
-                        <li>• Type-safe queries</li>
-                    </ul>
-                </div>
+            <div class="feature-card p-6 fast-hover">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">🚀</span>
+              </div>
+              <h3 class="text-xl font-bold mb-3 text-gradient">Backend</h3>
+              <ul class="space-y-2 text-gray-600 text-sm">
+                <li class="flex items-center">
+                  <span class="text-blue-500 mr-2">🚀</span>Ultimate Express
+                </li>
+                <li class="flex items-center">
+                  <span class="text-blue-500 mr-2">📝</span>TypeScript
+                </li>
+                <li class="flex items-center">
+                  <span class="text-blue-500 mr-2">🔐</span>JWT Auth
+                </li>
+                <li class="flex items-center">
+                  <span class="text-blue-500 mr-2">🏗️</span>MVC Pattern
+                </li>
+              </ul>
             </div>
 
-            <!-- CTA Section -->
-            <div class="mt-24 text-center px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Ready to build something amazing?</h2>
-                <div
-                    class="inline-flex items-center space-x-2 bg-gray-800 text-gray-200 p-3 rounded-lg font-mono text-sm max-w-full overflow-x-auto">
-                    <code class="whitespace-nowrap">npx create-laju-app my-app</code>
-                    <button
-                        onclick="navigator.clipboard.writeText('npx create-laju-app my-app')"
-                        class="hover:text-emerald-400 flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                    </button>
-                </div>
+            <div
+              class="feature-card p-6 fast-hover sm:col-span-2 lg:col-span-1"
+            >
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-500 rounded-xl flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">💾</span>
+              </div>
+              <h3 class="text-xl font-bold mb-3 text-gradient">Database</h3>
+              <ul class="space-y-2 text-gray-600 text-sm">
+                <li class="flex items-center">
+                  <span class="text-pink-500 mr-2">⚡</span>Knex.js
+                </li>
+                <li class="flex items-center">
+                  <span class="text-pink-500 mr-2">💨</span>SQLite3
+                </li>
+                <li class="flex items-center">
+                  <span class="text-pink-500 mr-2">🔥</span>Redis Cache
+                </li>
+                <li class="flex items-center">
+                  <span class="text-pink-500 mr-2">📧</span>Nodemailer
+                </li>
+              </ul>
             </div>
-        </main>
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="section-spacing mt-16 text-center">
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6">
+            🚀 Ready to Go Super Fast?
+          </h2>
+          <div
+            class="glass-effect p-4 sm:p-6 rounded-2xl inline-block max-w-full overflow-hidden"
+          >
+            <div
+              class="flex items-center space-x-2 sm:space-x-4 font-mono text-white text-xs sm:text-sm"
+            >
+              <code class="break-all"
+                >git clone https://github.com/arghoritma/litex.git</code
+              >
+              <button
+                onclick="navigator.clipboard.writeText('git clone https://github.com/arghoritma/litex.git')"
+                class="p-2 hover:bg-white/20 rounded-lg transition-colors flex-shrink-0 fast-hover"
+                title="Copy to clipboard"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 sm:h-5 sm:w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <p class="text-white/70 text-sm mt-4">
+            ⚡ Install • 🚀 Run • 💨 Deploy
+          </p>
+        </div>
+      </main>
     </div>
+
+    <script>
+      // PWA Service Worker Registration
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", async () => {
+          try {
+            const registration = await navigator.serviceWorker.register(
+              "/sw.js"
+            );
+            console.log(
+              "⚡ LiteX PWA: Service Worker registered successfully:",
+              registration
+            );
+
+            // Check for updates
+            registration.addEventListener("updatefound", () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener("statechange", () => {
+                if (newWorker.state === "installed") {
+                  if (navigator.serviceWorker.controller) {
+                    // New update available
+                    showUpdateNotification();
+                  }
+                }
+              });
+            });
+          } catch (error) {
+            console.error(
+              "⚠️ LiteX PWA: Service Worker registration failed:",
+              error
+            );
+          }
+        });
+      }
+
+      // PWA Install Prompt
+      let deferredPrompt;
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallButton();
+      });
+
+      function showInstallButton() {
+        // Create install button if not exists
+        if (!document.getElementById("pwa-install-btn")) {
+          const installBtn = document.createElement("button");
+          installBtn.id = "pwa-install-btn";
+          installBtn.innerHTML = "📱 Install App";
+          installBtn.className = "btn-secondary fast-hover";
+          installBtn.style.position = "fixed";
+          installBtn.style.bottom = "20px";
+          installBtn.style.right = "20px";
+          installBtn.style.zIndex = "1000";
+          installBtn.style.fontSize = "14px";
+          installBtn.style.padding = "10px 16px";
+
+          installBtn.addEventListener("click", async () => {
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              const { outcome } = await deferredPrompt.userChoice;
+              console.log("⚡ LiteX PWA: Install prompt outcome:", outcome);
+              deferredPrompt = null;
+              installBtn.remove();
+            }
+          });
+
+          document.body.appendChild(installBtn);
+        }
+      }
+
+      function showUpdateNotification() {
+        // Create update notification
+        const updateNotification = document.createElement("div");
+        updateNotification.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 16px;
+            color: white;
+            z-index: 1001;
+            max-width: 300px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+          ">
+            <div style="font-weight: 600; margin-bottom: 8px;">⚡ Update Available!</div>
+            <div style="font-size: 14px; margin-bottom: 12px;">A new version of LiteX is ready.</div>
+            <button onclick="location.reload()" style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              border: none;
+              padding: 8px 16px;
+              border-radius: 20px;
+              font-size: 12px;
+              font-weight: 600;
+              cursor: pointer;
+              margin-right: 8px;
+            ">🚀 Update</button>
+            <button onclick="this.parentElement.parentElement.remove()" style="
+              background: rgba(255, 255, 255, 0.1);
+              color: white;
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              padding: 8px 16px;
+              border-radius: 20px;
+              font-size: 12px;
+              font-weight: 600;
+              cursor: pointer;
+            ">Later</button>
+          </div>
+        `;
+        document.body.appendChild(updateNotification);
+
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          if (updateNotification.parentElement) {
+            updateNotification.remove();
+          }
+        }, 10000);
+      }
+
+      // Mobile menu toggle
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("active");
+      }
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("mobile-menu");
+        const hamburger = event.target.closest(".hamburger");
+
+        if (!hamburger && !menu.contains(event.target)) {
+          menu.classList.remove("active");
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Add loading animation to buttons
+      document
+        .querySelectorAll(".btn-primary, .btn-secondary")
+        .forEach((btn) => {
+          btn.addEventListener("click", function () {
+            if (!this.href.startsWith("#")) {
+              this.style.transform = "scale(0.95)";
+              setTimeout(() => {
+                this.style.transform = "";
+              }, 150);
+            }
+          });
+        });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
-</body>
-
+  </body>
 </html>

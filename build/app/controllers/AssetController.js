@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
+const View_1 = require("../services/View");
 let cache = {};
 class Controller {
     async distFolder(request, response) {
@@ -23,7 +24,10 @@ class Controller {
             if (cache[file]) {
                 return response.send(cache[file]);
             }
-            if (await fs_1.default.promises.access(filePath).then(() => true).catch(() => false)) {
+            if (await fs_1.default.promises
+                .access(filePath)
+                .then(() => true)
+                .catch(() => false)) {
                 const fileContent = await fs_1.default.promises.readFile(filePath);
                 cache[file] = fileContent;
                 return response.send(fileContent);
@@ -37,20 +41,34 @@ class Controller {
     }
     async publicFolder(request, response) {
         const allowedExtensions = [
-            '.ico', '.png', '.jpeg', '.jpg', '.gif', '.svg',
-            '.txt', '.pdf', '.css', '.js',
-            '.woff', '.woff2', '.ttf', '.eot',
-            '.mp4', '.webm', '.mp3', '.wav'
+            ".ico",
+            ".png",
+            ".jpeg",
+            ".jpg",
+            ".gif",
+            ".svg",
+            ".txt",
+            ".pdf",
+            ".css",
+            ".js",
+            ".woff",
+            ".woff2",
+            ".ttf",
+            ".eot",
+            ".mp4",
+            ".webm",
+            ".mp3",
+            ".wav",
         ];
         const path = "public/" + request.path.replace("/", "").replaceAll("%20", " ");
-        if (!path.includes('.')) {
-            return response.status(404).send('Page not found');
+        if (!path.includes(".")) {
+            return response.status(404).send((0, View_1.view)("not-found.html"));
         }
-        if (!allowedExtensions.some(ext => path.toLowerCase().endsWith(ext))) {
-            return response.status(403).send('File type not allowed');
+        if (!allowedExtensions.some((ext) => path.toLowerCase().endsWith(ext))) {
+            return response.status(403).send("File type not allowed");
         }
         if (!fs_1.default.existsSync(path)) {
-            return response.status(404).send('File not found');
+            return response.status(404).send("File not found");
         }
         return response.download(path);
     }

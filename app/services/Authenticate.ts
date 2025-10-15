@@ -7,7 +7,8 @@
 import DB from "./DB";
 import { Request, Response } from "../../type";
 import { randomUUID, pbkdf2Sync, randomBytes } from "crypto";
-import { signToken } from "../services/Jwt"
+import { signToken, verifyToken } from "../services/Jwt"
+
 
 
 // PBKDF2 configuration
@@ -96,7 +97,12 @@ class Autenticate {
     * 3. Redirects to the login page
     */
    async logout(request: Request, response: Response) {
-      await DB.from("sessions").where("id", request.cookies.auth_token).delete();
+      const token = request.cookies.auth_token;
+      const payload = verifyToken(token);
+
+      if (payload) {
+         await DB.from("sessions").where("id", payload.id).delete();
+      }
 
       response.cookie("auth_token", "", { maxAge: 0 }).redirect("/auth/login");
    }

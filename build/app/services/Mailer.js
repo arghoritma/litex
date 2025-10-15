@@ -8,8 +8,8 @@ const transporter = nodemailer.createTransport({
     secure: true,
     auth: {
         user: process.env.USER_MAILER,
-        pass: process.env.PASS_MAILER
-    }
+        pass: process.env.PASS_MAILER,
+    },
 });
 transporter.config = ({ user, pass }) => {
     if (instace[user]) {
@@ -22,8 +22,8 @@ transporter.config = ({ user, pass }) => {
             secure: true,
             auth: {
                 user: user,
-                pass: pass
-            }
+                pass: pass,
+            },
         });
     }
     return instace[user];

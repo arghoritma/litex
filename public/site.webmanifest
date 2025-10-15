@@ -1,0 +1,72 @@
+{
+  "name": "⚡ LiteX - Ultra-Fast TypeScript Framework",
+  "short_name": "LiteX",
+  "description": "LiteX - Ultra-fast TypeScript framework with Svelte 5 & Ultimate Express. Build modern full-stack applications with blazing performance.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#667eea",
+  "background_color": "#764ba2",
+  "lang": "en",
+  "categories": ["developer", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "🚀 Get Started",
+      "short_name": "Get Started",
+      "description": "Start building with LiteX",
+      "url": "/auth/register",
+      "icons": [
+        {
+          "src": "/icons/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "📖 Documentation",
+      "short_name": "Docs",
+      "description": "View LiteX documentation",
+      "url": "https://github.com/arghoritma/litex",
+      "icons": [
+        {
+          "src": "/icons/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

@@ -1,101 +1,182 @@
 <script>
-    import { inertia, router } from "@inertiajs/svelte";
-    import LajuIcon from "../../Components/LajuIcon.svelte";
-    import axios from "axios";
+  import { inertia, router } from "@inertiajs/svelte";
+  import LitexIcon from "../../Components/LitexIcon.svelte";
+  import axios from "axios";
 
-    let form = {
-        email: "",
-        phone: "",
-    };
+  let form = $state({
+    email: "",
+  });
 
-    let success = false;
-    export let error;
+  let success = $state(false);
+  let { error } = $props();
 
-    function submitForm() {
-        axios.post("/forgot-password", form).then((response) => {
-            success = true;
-            form.email = "";
-            form.phone = "";
-        });
-    }
+  function submitForm() {
+    axios.post("/auth/forgot-password", form).then((response) => {
+      success.set(true);
+      form.email.set("");
+    });
+  }
 </script>
 
-<section class="bg-gray-50 dark:bg-gray-900">
+<!-- Main Container with LiteX theme -->
+<div
+  class="min-h-screen bg-gradient-to-br from-blue-500 via-purple-600 to-purple-700 relative overflow-hidden"
+>
+  <!-- Floating Background Elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
     <div
-        class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0"
+      class="absolute top-10 right-10 w-32 h-32 bg-white bg-opacity-10 rounded-full animate-pulse"
+    ></div>
+    <div
+      class="absolute bottom-20 left-5 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-bounce"
+    ></div>
+    <div
+      class="absolute top-1/2 left-1/3 w-16 h-16 bg-yellow-300 bg-opacity-20 rounded-full animate-ping"
+    ></div>
+  </div>
+
+  <!-- Content Container -->
+  <div
+    class="relative z-10 flex flex-col items-center justify-center px-3 sm:px-4 py-4 mx-auto min-h-screen"
+  >
+    <!-- Logo Section -->
+    <div
+      class="flex items-center mb-3 text-xl font-semibold text-white transform hover:scale-105 transition-all duration-300 fast-hover"
     >
-        <div
-            class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-            <LajuIcon></LajuIcon>
-        </div>
-        <div
-            class="w-full bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0"
-        >
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1
-                    class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl"
-                >
-                    Reset Password
-                </h1>
-
-                {#if error}
-                    <div
-                        class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-red-900 dark:text-red-400"
-                        role="alert"
-                    >
-                        {error}
-                    </div>
-                {/if}
-
-                {#if success}
-                    <div
-                        class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-green-900 dark:text-green-400"
-                        role="alert"
-                    >
-                        Link reset password telah dikirim ke email atau nomor
-                        telepon Anda.
-                    </div>
-                {/if}
-
-                <form
-                    class="space-y-4 md:space-y-6"
-                    on:submit|preventDefault={submitForm}
-                >
-                    <div>
-                        <label
-                            for="email"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Email atau Nomor Telepon</label
-                        >
-                        <input
-                            bind:value={form.email}
-                            type="text"
-                            name="email"
-                            id="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-emerald-600 focus:outline-none block w-full py-2.5 px-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            placeholder="email@example.com atau 08xxxxxxxxxx"
-                            required
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="w-full text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                    >
-                        Kirim Link Reset Password
-                    </button>
-
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Ingat password Anda? <a
-                            href="/login"
-                            use:inertia
-                            class="font-medium text-emerald-600 hover:underline dark:text-emerald-400"
-                            >Login disini</a
-                        >
-                    </p>
-                </form>
-            </div>
-        </div>
+      <LitexIcon />
     </div>
-</section>
+
+    <!-- Main Card -->
+    <div class="w-full max-w-sm sm:max-w-md">
+      <div
+        class="bg-white bg-opacity-10 backdrop-blur-2xl border border-white border-opacity-20 rounded-2xl shadow-2xl p-4 sm:p-6 transform hover:scale-105 transition-all duration-300"
+      >
+        <!-- Header -->
+        <div class="text-center mb-4">
+          <h1
+            class="text-xl sm:text-2xl font-bold text-white mb-1 tracking-tight"
+          >
+            🔑 Reset Password
+          </h1>
+          <p class="text-white text-opacity-80 text-xs sm:text-sm">
+            Get back to your <span class="text-yellow-300 font-semibold"
+              >super fast</span
+            > LiteX account
+          </p>
+        </div>
+        <!-- Error Message -->
+        {#if error}
+          <div
+            class="mb-4 p-3 bg-red-500 bg-opacity-20 border border-red-400 border-opacity-30 rounded-xl backdrop-blur-lg"
+            role="alert"
+          >
+            <div class="flex items-center">
+              <span class="text-red-200 text-xs sm:text-sm font-medium"
+                >⚠️ {error}</span
+              >
+            </div>
+          </div>
+        {/if}
+
+        <!-- Success Message -->
+        {#if success}
+          <div
+            class="mb-4 p-3 bg-green-500 bg-opacity-20 border border-green-400 border-opacity-30 rounded-xl backdrop-blur-lg"
+            role="alert"
+          >
+            <div class="flex items-center">
+              <span class="text-green-200 text-xs sm:text-sm font-medium"
+                >✅ Password reset link has been sent to your email!</span
+              >
+            </div>
+          </div>
+        {/if}
+
+        <!-- Reset Password Form -->
+        <form class="space-y-3" on:submit|preventDefault={submitForm}>
+          <!-- Email Field -->
+          <div class="group">
+            <label
+              for="email"
+              class="block mb-1 text-xs sm:text-sm font-semibold text-white text-opacity-90"
+            >
+              📧 Email Address
+            </label>
+            <input
+              bind:value={form.email}
+              required
+              type="email"
+              name="email"
+              id="email"
+              class="w-full px-3 py-2 bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-opacity-30 focus:border-white focus:border-opacity-40 backdrop-blur-lg transition-all duration-200 hover:bg-opacity-15 group-hover:scale-105 text-sm"
+              placeholder="maulana@example.com"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 hover:from-purple-700 hover:via-blue-700 hover:to-purple-800 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 shadow-xl hover:shadow-purple-500/25 fast-hover group text-sm"
+          >
+            <span class="flex items-center justify-center">
+              🚀 <span class="ml-2">Send Reset Link</span>
+              <svg
+                class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Login Link -->
+          <div class="text-center pt-3">
+            <p class="text-xs sm:text-sm text-white text-opacity-70">
+              Remember your password?
+              <a
+                href="/auth/login"
+                use:inertia
+                class="text-yellow-300 hover:text-yellow-200 font-semibold ml-1 transition-colors duration-200 fast-hover"
+              >
+                ⚡ Login here
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="mt-4 text-center">
+        <p class="text-white text-opacity-60 text-xs">
+          🔑 We'll help you get back to your account quickly
+        </p>
+        <div class="flex justify-center items-center space-x-3 mt-2">
+          <span class="text-white text-opacity-40 text-xs">🔒 Secure</span>
+          <span class="text-white text-opacity-40 text-xs">⚡ Fast</span>
+          <span class="text-white text-opacity-40 text-xs">🎯 Simple</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Custom animations for speed theme */
+  .fast-hover {
+    transition: all 0.15s ease;
+  }
+
+  .fast-hover:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* Form group animations */
+  .group:hover input {
+    transform: scale(1.02);
+  }
+</style>

@@ -21,8 +21,17 @@ export default async (
             const payload = verifyToken(request.cookies.auth_token);
             console.log("Payload:", payload);
             if (payload) {
-                const user = await DB.from("users")
+
+                const session = await DB.from("sessions")
                     .where("id", payload.id)
+                    .first();
+
+                if (!session) {
+                    response.clearCookie("auth_token").redirect("/auth/login");
+                    return;
+                }
+                const user = await DB.from("users")
+                    .where("id", session.user_id)
                     .select(["id", "name", "email", "phone", "is_admin", "is_verified"])
                     .first();
 

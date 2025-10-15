@@ -8,7 +8,7 @@ import ApiRoutes from './api'
 const Route = Router();
 
 Route.use("/auth", AuthRoutes);
-Route.use("/protected", ProtectedRoutes);
+Route.use("/protected", ProtectedRoutes); // Anda bisa menggantinya dengan "dashboard" atau "admin" dll
 Route.use("/api", ApiRoutes);
 
 /**

@@ -6,11 +6,15 @@ const inertia = () => {
     return (req, res, next) => {
         res.inertia = async (component, inertiaProps = {}, viewProps = {}) => {
             const url = `//${req.get("host")}${req.originalUrl}`;
-            let props = { user: req.user || {}, ...inertiaProps, ...viewProps, error: null };
-            if (req.cookies.error) {
+            let props = {
+                user: req.user || {},
+                ...inertiaProps,
+                ...viewProps,
+                error: null,
+            };
+            if (req.cookies && req.cookies.error) {
                 props.error = req.cookies.error;
-                res
-                    .cookie("error", "", 0);
+                res.cookie("error", "", { maxAge: 0 });
             }
             const inertiaObject = {
                 component: component,

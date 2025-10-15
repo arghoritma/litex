@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>LiteX - Offline</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .offline-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        padding: 3rem 2rem;
+        text-align: center;
+        max-width: 450px;
+        width: 100%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .logo {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .offline-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        display: block;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.05);
+        }
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+        line-height: 1.5;
+      }
+
+      .offline-message {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        opacity: 0.8;
+        color: #f0f8ff;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .status-info {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+
+      .feature-list {
+        text-align: left;
+        margin: 1.5rem 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-list li {
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 480px) {
+        .offline-container {
+          padding: 2rem 1.5rem;
+        }
+
+        .logo {
+          font-size: 2.5rem;
+        }
+
+        .offline-icon {
+          font-size: 3rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+
+        .btn-group {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .btn {
+          padding: 12px 24px;
+          font-size: 0.9rem;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="offline-container">
+      <div class="logo">⚡ LiteX</div>
+      <span class="offline-icon">🔌</span>
+
+      <h1>You're Offline</h1>
+      <p>Don't worry, you can still access some features!</p>
+
+      <div class="offline-message">
+        LiteX is designed to work offline. Some cached content and features are
+        available even without an internet connection.
+      </div>
+
+      <ul class="feature-list">
+        <li>📱 App continues to work offline</li>
+        <li>⚡ Cached pages load instantly</li>
+        <li>🔄 Data syncs when connection returns</li>
+        <li>💾 Local storage preserves your work</li>
+      </ul>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="location.reload()">
+          🚀 Try Again
+        </button>
+        <a href="/" class="btn btn-secondary"> 🏠 Go Home </a>
+      </div>
+
+      <div class="status-info">
+        <div id="connection-status">Checking connection...</div>
+      </div>
+    </div>
+
+    <script>
+      // Monitor connection status
+      function updateConnectionStatus() {
+        const statusElement = document.getElementById("connection-status");
+        if (navigator.onLine) {
+          statusElement.innerHTML =
+            "🟢 Connection restored! You can try refreshing the page.";
+          statusElement.style.color = "#90EE90";
+        } else {
+          statusElement.innerHTML =
+            "🔴 Still offline. Please check your internet connection.";
+          statusElement.style.color = "#FFB6C1";
+        }
+      }
+
+      // Initial status check
+      updateConnectionStatus();
+
+      // Listen for connection changes
+      window.addEventListener("online", updateConnectionStatus);
+      window.addEventListener("offline", updateConnectionStatus);
+
+      // Auto-refresh when connection is restored
+      window.addEventListener("online", () => {
+        setTimeout(() => {
+          if (navigator.onLine) {
+            location.reload();
+          }
+        }, 1000);
+      });
+
+      // Service Worker messaging
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.addEventListener("message", (event) => {
+          if (event.data && event.data.type === "CACHE_UPDATED") {
+            const statusElement = document.getElementById("connection-status");
+            statusElement.innerHTML =
+              '⚡ New content available! Click "Try Again" to refresh.';
+            statusElement.style.color = "#87CEEB";
+          }
+        });
+      }
+
+      console.log("⚡ LiteX Offline page loaded");
+    </script>
+  </body>
+</html>

@@ -24,21 +24,21 @@ class AuthController {
         let query = DB_1.default.from("users").select("*");
         if (search) {
             query = query.where(function () {
-                this.where('name', 'like', `%${search}%`)
-                    .orWhere('email', 'like', `%${search}%`)
-                    .orWhere('phone', 'like', `%${search}%`);
+                this.where("name", "like", `%${search}%`)
+                    .orWhere("email", "like", `%${search}%`)
+                    .orWhere("phone", "like", `%${search}%`);
             });
         }
-        if (filter === 'verified') {
-            query = query.where('is_verified', true);
+        if (filter === "verified") {
+            query = query.where("is_verified", true);
         }
-        else if (filter === 'unverified') {
-            query = query.where('is_verified', false);
+        else if (filter === "unverified") {
+            query = query.where("is_verified", false);
         }
         const countQuery = query.clone();
-        const total = await countQuery.count('* as count').first();
+        const total = await countQuery.count("* as count").first();
         const users = await query
-            .orderBy('created_at', 'desc')
+            .orderBy("created_at", "desc")
             .offset((page - 1) * 10)
             .limit(10);
         return response.inertia("home", {
@@ -46,27 +46,25 @@ class AuthController {
             total: 0,
             page,
             search,
-            filter
+            filter,
         });
     }
     async deleteUsers(request, response) {
         const { ids } = request.body;
         if (!Array.isArray(ids)) {
-            return response.status(400).json({ error: 'Invalid request format' });
+            return response.status(400).json({ error: "Invalid request format" });
         }
         if (!request.user.is_admin) {
-            return response.status(403).json({ error: 'Unauthorized' });
+            return response.status(403).json({ error: "Unauthorized" });
         }
-        await DB_1.default.from("users")
-            .whereIn('id', ids)
-            .delete();
+        await DB_1.default.from("users").whereIn("id", ids).delete();
         return response.redirect("/home");
     }
     async profilePage(request, response) {
         return response.inertia("profile");
     }
     async changeProfile(request, response) {
-        const data = await request.json();
+        const data = request.body;
         await DB_1.default.from("users").where("id", request.user.id).update({
             name: data.name,
             email: data.email.toLowerCase(),
@@ -75,10 +73,8 @@ class AuthController {
         return response.json({ message: "Your profile has been updated" });
     }
     async changePassword(request, response) {
-        const data = await request.json();
-        const user = await DB_1.default.from("users")
-            .where("id", request.user.id)
-            .first();
+        const data = request.body;
+        const user = await DB_1.default.from("users").where("id", request.user.id).first();
         const password_match = await Authenticate_1.default.compare(data.current_password, user.password);
         if (password_match) {
             await DB_1.default.from("users")
@@ -103,32 +99,32 @@ class AuthController {
             .where("expires_at", ">", new Date())
             .first();
         if (!token) {
-            return response.status(404).send("Link tidak valid atau sudah kadaluarsa");
+            return response
+                .status(404)
+                .send("Link tidak valid atau sudah kadaluarsa");
         }
         return response.inertia("auth/reset-password", { id: request.params.id });
     }
     async resetPassword(request, response) {
-        const { id, password } = await request.json();
+        const { id, password } = request.body;
         const token = await DB_1.default.from("password_reset_tokens")
             .where("token", id)
             .where("expires_at", ">", new Date())
             .first();
         if (!token) {
-            return response.status(404).send("Link tidak valid atau sudah kadaluarsa");
+            return response
+                .status(404)
+                .send("Link tidak valid atau sudah kadaluarsa");
         }
-        const user = await DB_1.default.from("users")
-            .where("email", token.email)
-            .first();
+        const user = await DB_1.default.from("users").where("email", token.email).first();
         await DB_1.default.from("users")
             .where("id", user.id)
             .update({ password: await Authenticate_1.default.hash(password) });
-        await DB_1.default.from("password_reset_tokens")
-            .where("token", id)
-            .delete();
+        await DB_1.default.from("password_reset_tokens").where("token", id).delete();
         return Authenticate_1.default.process(user, request, response);
     }
     async sendResetPassword(request, response) {
-        let { email, phone } = await request.json();
+        let { email, phone } = request.body;
         let user;
         if (email && email.includes("@")) {
             user = await DB_1.default.from("users").where("email", email).first();
@@ -143,7 +139,7 @@ class AuthController {
         await DB_1.default.from("password_reset_tokens").insert({
             email: user.email,
             token: token,
-            expires_at: (0, dayjs_1.default)().add(24, 'hours').toDate()
+            expires_at: (0, dayjs_1.default)().add(24, "hours").toDate(),
         });
         try {
             await Mailer_1.default.sendMail({
@@ -228,7 +224,7 @@ This link will expire in 24 hours.
         }
     }
     async processLogin(request, response) {
-        let body = await request.json();
+        let body = request.body;
         let { email, password, phone } = body;
         let user;
         if (email && email.includes("@")) {
@@ -244,18 +240,18 @@ This link will expire in 24 hours.
             }
             else {
                 return response
-                    .cookie("error", "Maaf, Password salah", 3000)
-                    .redirect("/login");
+                    .cookie("error", "Maaf, Password salah", { maxAge: 3000 })
+                    .redirect("/auth/login");
             }
         }
         else {
             return response
-                .cookie("error", "Email/No.HP tidak terdaftar", 3000)
-                .redirect("/login");
+                .cookie("error", "Email/No.HP tidak terdaftar", { maxAge: 3000 })
+                .redirect("/auth/login");
         }
     }
     async processRegister(request, response) {
-        let { email, password, name } = await request.json();
+        let { email, password, name } = request.body;
         email = email.toLowerCase();
         try {
             const user = {
@@ -270,8 +266,8 @@ This link will expire in 24 hours.
         catch (error) {
             console.log(error);
             return response
-                .cookie("error", "Maaf, Email sudah terdaftar", 3000)
-                .redirect("/register");
+                .cookie("error", "Maaf, Email sudah terdaftar", { maxAge: 3000 })
+                .redirect("/auth/register");
         }
     }
     async verify(request, response) {
@@ -282,7 +278,7 @@ This link will expire in 24 hours.
         await DB_1.default.from("email_verification_tokens").insert({
             user_id: request.user.id,
             token: token,
-            expires_at: (0, dayjs_1.default)().add(24, 'hours').toDate()
+            expires_at: (0, dayjs_1.default)().add(24, "hours").toDate(),
         });
         try {
             await Mailer_1.default.sendMail({
@@ -306,7 +302,7 @@ Link ini akan kadaluarsa dalam 24 jam.`,
         const verificationToken = await DB_1.default.from("email_verification_tokens")
             .where({
             user_id: request.user.id,
-            token: id
+            token: id,
         })
             .where("expires_at", ">", new Date())
             .first();
