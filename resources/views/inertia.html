@@ -138,5 +138,17 @@
     </script>
 
     <script type="module" src="/js/main.js"></script>
+    <script>
+      document.requestStorageAccess().then(
+        () => {
+          // Storage access granted. You can now access storage APIs.
+          console.log("Storage access granted");
+        },
+        () => {
+          // Storage access denied. Handle accordingly.
+          console.error("Storage access denied");
+        }
+      );
+    </script>
   </body>
 </html>

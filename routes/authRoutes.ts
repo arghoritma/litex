@@ -19,7 +19,7 @@ Route.get("/login", AuthController.loginPage);
 Route.post("/login", AuthController.processLogin);
 Route.get("/register", AuthController.registerPage);
 Route.post("/register", AuthController.processRegister);
-Route.post("/logout", AuthController.logout);
+Route.get("/logout", AuthController.logout);
 Route.get("/google/redirect", AuthController.redirect);
 Route.get("/google/callback", AuthController.googleCallback);
 

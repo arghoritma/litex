@@ -109,7 +109,7 @@
               name="email"
               id="email"
               class="w-full px-3 py-2 bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-opacity-30 focus:border-white focus:border-opacity-40 backdrop-blur-lg transition-all duration-200 hover:bg-opacity-15 group-hover:scale-105 text-sm"
-              placeholder="maulana@example.com"
+              placeholder="yourmail@example.com"
             />
           </div>
 

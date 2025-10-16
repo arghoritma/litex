@@ -36,8 +36,10 @@ webserver.use((err: any, req: any, res: any, next: any) => {
 });
 
 webserver.listen(PORT, () => {
-   console.log(`🚀 Server and web is running at http://localhost:${PORT}`);
+   console.log(`🚀 LiteX Backend Server running at http://localhost:${PORT}`);
+   console.log(`⚡ Environment: ${process.env.NODE_ENV || 'development'}`);
    console.log(`🌟 Ready to serve requests!`);
+   console.log(`📝 Frontend Vite Server: http://localhost:${process.env.VITE_PORT || 3000}`);
 });
 
 process.on("SIGTERM", () => {

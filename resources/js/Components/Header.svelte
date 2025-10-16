@@ -40,7 +40,7 @@
   ];
 
   function handleLogout() {
-    router.post("/logout");
+    router.get("/auth/logout");
   }
 </script>
 

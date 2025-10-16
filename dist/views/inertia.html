@@ -47,9 +47,9 @@
     <link rel="shortcut icon" href="/favicon.ico" />
 
     <!-- Stylesheets -->
-    <script type="module" crossorigin src="/assets/inertia-C1cD9GPU.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/inertia-h8BgJlCS.css">
-    <link rel="stylesheet" crossorigin href="/assets/index-DAkq-4nb.css">
+    <script type="module" crossorigin src="/assets/inertia-CsmFcvwn.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/inertia-CQI1e-MO.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-CdKlixB2.css">
   </head>
   <body>
     <div id="app" data-page="{{it.page}}"></div>
@@ -139,5 +139,17 @@
       });
     </script>
 
+    <script>
+      document.requestStorageAccess().then(
+        () => {
+          // Storage access granted. You can now access storage APIs.
+          console.log("Storage access granted");
+        },
+        () => {
+          // Storage access denied. Handle accordingly.
+          console.error("Storage access denied");
+        }
+      );
+    </script>
   </body>
 </html>
