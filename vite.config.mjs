@@ -6,8 +6,9 @@ import { readdirSync } from "fs";
 
 // Constants
 const VIEWS_DIR = "resources/views";
-const DEFAULT_PORT = 3000;
+const DEFAULT_PORT = 5173;
 const PORT = parseInt(process.env.VITE_PORT) || DEFAULT_PORT;
+const SERVER_PORT = parseInt(process.env.PORT) || 1414;
 
 // Generate input entries from HTML files
 function generateInputEntries() {
@@ -44,6 +45,8 @@ function createPortHandlingPlugin() {
 export default defineConfig({
   plugins: [svelte(), createPortHandlingPlugin()],
   root: "resources",
+  logLevel: "silent",
+  clearScreen: false,
   server: {
     host: "0.0.0.0",
     port: PORT,
@@ -52,11 +55,11 @@ export default defineConfig({
     proxy: {
       // Proxy API calls to backend server
       "/api": {
-        target: "http://localhost:5555",
+        target: `http://localhost:${SERVER_PORT}`,
         changeOrigin: true,
       },
       "/auth": {
-        target: "http://localhost:5555",
+        target: `http://localhost:${SERVER_PORT}`,
         changeOrigin: true,
       },
     },
