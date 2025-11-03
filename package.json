@@ -1,16 +1,15 @@
 {
   "name": "litex",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "LiteX (Lite Express) is a high-performance TypeScript web framework combining Ultimate Express, Svelte 5, and Inertia.js for building modern full-stack applications. Features server-side rendering, real-time capabilities, and seamless client-server state management.",
   "main": "server.ts",
   "scripts": {
     "dev": "cls && npx concurrently --raw \"npm run dev:vite\" \"npm run dev:server\"",
     "dev:server": "tsx watch server.ts",
     "dev:vite": "vite > nul 2>&1",
-    "build": "if exist build rmdir /s /q build && vite build && tsc && xcopy /s /e /i dist build && xcopy /s /e /i public build",
-    "build:server": "tsc",
-    "build:vite": "vite build",
-    "start": "node build/server.js"
+    "build": "if exist build rmdir /s /q build && set NODE_ENV=production && vite build && tsc && xcopy /s /e /i dist build && xcopy /s /e /i public build && xcopy /s /e /i resources\\views build\\views",
+    "postbuild": "node sync_version",
+    "start": "set NODE_ENV=production && node build/server.js"
   },
   "author": "Abdul Rojak",
   "license": "ISC",

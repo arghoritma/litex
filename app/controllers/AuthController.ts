@@ -9,8 +9,8 @@ import { randomUUID } from "crypto";
 
 class AuthController {
    public async registerPage(request: Request, response: Response) {
-      if (request.cookies.auth_id) {
-         return response.redirect("/home");
+      if (request.cookies.auth_token) {
+         return response.redirect("/protected");
       }
       return response.inertia("auth/register");
    }
@@ -107,10 +107,18 @@ class AuthController {
             .update({
                password: await Authenticate.hash(data.new_password),
             });
+
+         return response.json({
+            message: "Password berhasil diubah",
+            success: true
+         });
       } else {
          return response
             .status(400)
-            .json({ message: "Password lama tidak cocok" });
+            .json({
+               message: "Password lama tidak cocok",
+               success: false
+            });
       }
    }
 
@@ -145,7 +153,10 @@ class AuthController {
       if (!token) {
          return response
             .status(404)
-            .send("Link tidak valid atau sudah kadaluarsa");
+            .json({
+               message: "Link tidak valid atau sudah kadaluarsa",
+               success: false
+            });
       }
 
       const user = await DB.from("users").where("email", token.email).first();
@@ -172,7 +183,10 @@ class AuthController {
       }
 
       if (!user) {
-         return response.status(404).send("Email tidak terdaftar");
+         return response.status(404).json({
+            message: "Email tidak terdaftar",
+            success: false
+         });
       }
 
       const token = randomUUID();
@@ -216,7 +230,10 @@ This link will expire in 24 hours.
             });
       } catch (error) { }
 
-      return response.send("OK");
+      return response.json({
+         message: "Reset password link has been sent to your email!",
+         success: true
+      });
    }
 
    public async loginPage(request: Request, response: Response) {
@@ -330,7 +347,6 @@ This link will expire in 24 hours.
 
          return Authenticate.process(user, request, response);
       } catch (error) {
-         console.log(error);
          return response
             .cookie("error", "Maaf, Email sudah terdaftar", { maxAge: 3000 })
             .redirect("/auth/register");
@@ -396,7 +412,8 @@ Link ini akan kadaluarsa dalam 24 jam.`,
    }
 
    public async logout(request: Request, response: Response) {
-      if (request.cookies.auth_auth_token) {
+
+      if (request.cookies.auth_token) {
          await Authenticate.logout(request, response);
       }
    }

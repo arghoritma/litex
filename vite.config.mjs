@@ -67,8 +67,22 @@ export default defineConfig({
   build: {
     outDir: "../dist",
     emptyOutDir: true,
+    manifest: true, // Generate manifest.json
     rollupOptions: {
-      input: generateInputEntries(),
+      input: {
+        main: resolve(process.cwd(), "resources/js/main.js"),
+      },
+      output: {
+        entryFileNames: "js/[name].js",
+        chunkFileNames: "js/[name]-[hash].js",
+        assetFileNames: (assetInfo) => {
+          // Put CSS in css folder
+          if (assetInfo.name.endsWith(".css")) {
+            return "css/[name]-[hash][extname]";
+          }
+          return "assets/[name]-[hash][extname]";
+        },
+      },
     },
   },
   define: {

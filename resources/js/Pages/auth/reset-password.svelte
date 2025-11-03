@@ -3,13 +3,35 @@
   import LitexIcon from "../../Components/LitexIcon.svelte";
   import { password_generator } from "../../Components/helper";
 
-  let { id, error } = $props();
+  let { id } = $props();
 
   let form = $state({
     password: "",
     password_confirmation: "",
     id,
   });
+
+  let error = $state("");
+  let loading = $state(false);
+  let success = $state(false);
+
+  // Check for flash messages from cookies
+  $effect(() => {
+    const errorCookie = getCookie("error");
+    if (errorCookie) {
+      error = errorCookie;
+      // Clear the cookie
+      document.cookie =
+        "error=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  });
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  }
 
   function generatePassword() {
     const retVal = password_generator(10);
@@ -18,12 +40,30 @@
   }
 
   function submitForm() {
+    if (loading) return;
+
     if (form.password != form.password_confirmation) {
-      alert("Password and confirmation password must match");
+      error = "Password and confirmation password must match";
       return false;
     }
 
-    router.post(`/auth/reset-password`, form);
+    loading = true;
+    error = "";
+
+    router.post(`/auth/reset-password`, form, {
+      onFinish: () => {
+        loading = false;
+      },
+      onError: (errors) => {
+        if (errors.message) {
+          error = errors.message;
+        }
+        loading = false;
+      },
+      onSuccess: () => {
+        success = true;
+      },
+    });
   }
 </script>
 
@@ -87,6 +127,21 @@
           </div>
         {/if}
 
+        <!-- Success Message -->
+        {#if success}
+          <div
+            class="mb-4 p-3 bg-green-500 bg-opacity-20 border border-green-400 border-opacity-30 rounded-xl backdrop-blur-lg"
+            role="alert"
+          >
+            <div class="flex items-center">
+              <span class="text-green-200 text-xs sm:text-sm font-medium"
+                >✅ Password updated successfully! You will be redirected to
+                login.</span
+              >
+            </div>
+          </div>
+        {/if}
+
         <!-- Reset Password Form -->
         <form class="space-y-3" on:submit|preventDefault={submitForm}>
           <!-- New Password Field -->
@@ -137,21 +192,46 @@
           <!-- Submit Button -->
           <button
             type="submit"
-            class="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 hover:from-purple-700 hover:via-blue-700 hover:to-purple-800 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 shadow-xl hover:shadow-purple-500/25 fast-hover group text-sm"
+            disabled={loading}
+            class="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 hover:from-purple-700 hover:via-blue-700 hover:to-purple-800 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-opacity-50 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 shadow-xl hover:shadow-purple-500/25 fast-hover group text-sm"
           >
             <span class="flex items-center justify-center">
-              🚀 <span class="ml-2">Update Password</span>
-              <svg
-                class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+              {#if loading}
+                <svg
+                  class="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Updating Password...
+              {:else}
+                🚀 <span class="ml-2">Update Password</span>
+                <svg
+                  class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              {/if}
             </span>
           </button>
 

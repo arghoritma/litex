@@ -20,7 +20,14 @@
     }
 
     form.phone = form.phone.toString();
-    router.post("/auth/register", form);
+    router.post("/auth/register", form),
+      {
+        onError: (errors) => {
+          if (errors.message) {
+            error = errors.message; // ✅ Akan muncul: "Email sudah terdaftar"
+          }
+        },
+      };
   }
 
   function generatePassword() {

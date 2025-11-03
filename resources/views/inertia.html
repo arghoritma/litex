@@ -46,8 +46,10 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/js/index.css" />
+    <!-- Vite CSS (injected dynamically) -->
+    {{@if(it.cssFiles && it.cssFiles.length)}} {{@each(it.cssFiles) => file}}
+    <link rel="stylesheet" href="{{file}}" />
+    {{/each}} {{/if}}
   </head>
   <body>
     <div id="app" data-page="{{it.page}}"></div>
@@ -137,18 +139,40 @@
       });
     </script>
 
-    <script type="module" src="/js/main.js"></script>
+    <!-- Vite JS (injected dynamically) -->
+    {{@if(it.jsFiles && it.jsFiles.length)}} {{@each(it.jsFiles) => file}}
+    <script type="module" src="{{file}}"></script>
+    {{/each}} {{/if}}
+
     <script>
-      document.requestStorageAccess().then(
-        () => {
-          // Storage access granted. You can now access storage APIs.
-          console.log("Storage access granted");
-        },
-        () => {
-          // Storage access denied. Handle accordingly.
-          console.error("Storage access denied");
-        }
-      );
+      // Request storage access only if needed and available
+      if ("requestStorageAccess" in document && document.hasStorageAccess) {
+        document
+          .hasStorageAccess()
+          .then((hasAccess) => {
+            if (!hasAccess) {
+              // Only request if we don't have access
+              document.requestStorageAccess().then(
+                () => {
+                  console.log("✅ Storage access granted");
+                },
+                (error) => {
+                  // Silently fail - not critical for app functionality
+                  console.debug(
+                    "ℹ️ Storage access not available:",
+                    error.message
+                  );
+                }
+              );
+            } else {
+              console.log("✅ Storage access already available");
+            }
+          })
+          .catch(() => {
+            // hasStorageAccess not supported, skip
+            console.debug("ℹ️ Storage Access API not supported");
+          });
+      }
     </script>
   </body>
 </html>

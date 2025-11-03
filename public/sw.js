@@ -42,11 +42,32 @@ self.addEventListener("fetch", (event) => {
   // Skip Inertia (XHR / fetch) navigation requests
   if (request.headers.get("X-Inertia")) return;
 
+  // Skip requests to other origins (except for assets)
+  if (url.origin !== location.origin) return;
+
   // Pass all requests directly to network without caching
   event.respondWith(
     fetch(request).catch((error) => {
-      console.error("⚠️ LiteX SW: Network request failed:", error);
-      return new Response("Network request failed", { status: 503 });
+      // Only log errors for important resources, not for optional ones
+      if (
+        !url.pathname.includes("/sw.js") &&
+        !url.pathname.includes("/workbox")
+      ) {
+        console.debug("⚠️ LiteX SW: Network request failed for:", url.pathname);
+      }
+
+      // Return a proper error response
+      return new Response(
+        JSON.stringify({
+          error: "Network request failed",
+          path: url.pathname,
+        }),
+        {
+          status: 503,
+          statusText: "Service Unavailable",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     })
   );
 });

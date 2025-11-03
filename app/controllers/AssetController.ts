@@ -92,6 +92,10 @@ class Controller {
 
         // Check if the path has any extension
         if (!path.includes(".")) {
+            // Check if it's an API request
+            if (request.path.startsWith("/api")) {
+                return response.status(404).json({ error: "Not found" });
+            }
             return response.status(404).send(view("not-found.html"));
         }
 
@@ -107,6 +111,80 @@ class Controller {
 
         // Serve the file
         return response.download(path);
+    }
+
+    /**
+     * Serves CSS files from the css folder
+     * - Works in both development and production
+     * - Implements file caching for better performance
+     * - Sets appropriate cache headers
+     */
+    public async cssFolder(request: Request, response: Response) {
+        const file = request.params.file;
+        const isDev = process.env.NODE_ENV !== "production";
+        const basePath = isDev ? "dist/css" : "css";
+
+        try {
+            const filePath = `${basePath}/${file}`;
+
+            response.setHeader("Content-Type", "text/css");
+            response.setHeader("Cache-Control", "public, max-age=31536000");
+
+            // Return cached content if available
+            if (cache[`css/${file}`]) {
+                return response.send(cache[`css/${file}`]);
+            }
+
+            // Check if file exists and serve it
+            if (!fs.existsSync(filePath)) {
+                return response.status(404).send("CSS file not found");
+            }
+
+            const fileContent = await fs.promises.readFile(filePath);
+            cache[`css/${file}`] = fileContent;
+
+            return response.send(fileContent);
+        } catch (error) {
+            console.error("Error serving CSS file:", error);
+            return response.status(500).send("Internal server error");
+        }
+    }
+
+    /**
+     * Serves JavaScript files from the js folder
+     * - Works in both development and production
+     * - Implements file caching for better performance
+     * - Sets appropriate cache headers
+     */
+    public async jsFolder(request: Request, response: Response) {
+        const file = request.params.file;
+        const isDev = process.env.NODE_ENV !== "production";
+        const basePath = isDev ? "dist/js" : "js";
+
+        try {
+            const filePath = `${basePath}/${file}`;
+
+            response.setHeader("Content-Type", "application/javascript");
+            response.setHeader("Cache-Control", "public, max-age=31536000");
+
+            // Return cached content if available
+            if (cache[`js/${file}`]) {
+                return response.send(cache[`js/${file}`]);
+            }
+
+            // Check if file exists and serve it
+            if (!fs.existsSync(filePath)) {
+                return response.status(404).send("JS file not found");
+            }
+
+            const fileContent = await fs.promises.readFile(filePath);
+            cache[`js/${file}`] = fileContent;
+
+            return response.send(fileContent);
+        } catch (error) {
+            console.error("Error serving JS file:", error);
+            return response.status(500).send("Internal server error");
+        }
     }
 }
 

@@ -18,8 +18,11 @@ let html_files = {} as {
 };
 
 // Set views directory based on environment
-let directory =
-   process.env.NODE_ENV == "development" ? "resources/views" : "dist/views";
+let directory = "resources/views";
+if (process.env.NODE_ENV === "production") {
+   // In production (built), views are in build/views
+   directory = "views";
+}
 
 // Set up file watcher for hot reloading in development
 if (process.env.NODE_ENV == "development") {

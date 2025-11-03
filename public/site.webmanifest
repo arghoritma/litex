@@ -56,10 +56,10 @@
       ]
     },
     {
-      "name": "📖 Documentation",
-      "short_name": "Docs",
-      "description": "View LiteX documentation",
-      "url": "https://github.com/arghoritma/litex",
+      "name": "📖 Login",
+      "short_name": "Login",
+      "description": "Login to LiteX",
+      "url": "/auth/login",
       "icons": [
         {
           "src": "/icons/android-chrome-192x192.png",

@@ -1,4 +1,5 @@
 import inertia from "./app/middlewares/inertia";
+import authMiddleware from "./app/middlewares/auth";
 import Web from "./routes";
 import express from "ultimate-express";
 import cors from 'cors';
@@ -18,7 +19,7 @@ webserver.use(express.urlencoded({ extended: true })); // Add URL-encoded body p
 
 // Serve static files from public folder
 webserver.use(express.static('public'));
-
+webserver.use(authMiddleware); // Add auth middleware
 webserver.use(inertia());
 webserver.use(Web);
 

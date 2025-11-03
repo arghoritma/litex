@@ -1,4 +1,5 @@
 import { view } from "../services/View";
+import ViteManifest from "../services/ViteManifest";
 let pkg = { version: "1.0.0" };
 
 const inertia = () => {
@@ -26,9 +27,14 @@ const inertia = () => {
          };
 
          if (!req.header("X-Inertia")) {
+            // Get Vite assets (CSS and JS)
+            const assets = ViteManifest.getAssets("js/main.js");
+
             const html = await view("inertia.html", {
                page: JSON.stringify(inertiaObject),
                title: process.env.TITLE || "LAJU - Ship Your Next Project Faster",
+               jsFiles: assets.js,
+               cssFiles: assets.css,
             });
 
             return res.type("html").send(html);

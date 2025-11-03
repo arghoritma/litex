@@ -40,7 +40,13 @@
   ];
 
   function handleLogout() {
-    router.get("/auth/logout");
+    try {
+      router.get("/auth/logout");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // You could also show a toast notification or alert here
+      alert("Logout failed. Please try again.");
+    }
   }
 </script>
 

@@ -86,8 +86,11 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/js/index.css" />
+    <!-- Vite CSS (injected dynamically) -->
+    {{@if(it.cssFiles && it.cssFiles.length)}} {{@each(it.cssFiles) => file}}
+    <link rel="stylesheet" href="{{file}}" />
+    {{/each}} {{/if}}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -7,6 +7,7 @@ import ProtectedRoutes from './protectedRoutes';
 import ApiRoutes from './api'
 const Route = Router();
 
+
 Route.use("/auth", AuthRoutes);
 Route.use("/protected", ProtectedRoutes); // Anda bisa menggantinya dengan "dashboard" atau "admin" dll
 Route.use("/api", ApiRoutes);
@@ -35,7 +36,19 @@ Route.get("/", HomeController.index);
 Route.get("/assets/:file", AssetController.distFolder);
 
 /**
- * 2. Public Assets (/*) - Catch-all Route
+ * 2. CSS Assets (/css/:file)
+ * Serves CSS files from the css directory
+ */
+Route.get("/css/:file", AssetController.cssFolder);
+
+/**
+ * 3. JS Assets (/js/:file)
+ * Serves JavaScript files from the js directory
+ */
+Route.get("/js/:file", AssetController.jsFolder);
+
+/**
+ * 4. Public Assets (/*) - Catch-all Route
  * Serves static files from the public directory
  * - Must be the LAST route in the file
  * - Only serves files with allowed extensions

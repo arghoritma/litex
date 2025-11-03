@@ -10,7 +10,17 @@
   let { error } = $props();
 
   function submitForm() {
-    router.post("/auth/login", { email: form.email, password: form.password });
+    router.post(
+      "/auth/login",
+      { email: form.email, password: form.password },
+      {
+        onError: (errors) => {
+          if (errors.message) {
+            error = errors.message; // Menampilkan pesan error dari server
+          }
+        },
+      }
+    );
   }
 </script>
 
