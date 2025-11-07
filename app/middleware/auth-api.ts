@@ -17,7 +17,10 @@ export default async (
 	next: NextFunction
 ) => {
 	try {
-		const authToken = request.headers["x-auth-token"] as string;
+		const authHeader = request.headers.authorization;
+		const authToken = authHeader && authHeader.startsWith('Bearer ')
+			? authHeader.substring(7)
+			: null;
 
 		if (!authToken) {
 			return response.status(401).json({ error: "No token provided" });
