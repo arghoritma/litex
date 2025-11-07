@@ -17,6 +17,7 @@ export interface Request extends Request {
         created_at: number;
     };
     share: {
+        authMethod: any;
         user: {
             id: number;
             name: string;

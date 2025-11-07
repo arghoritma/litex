@@ -1,5 +1,5 @@
-import inertia from "./app/middlewares/inertia";
-import authMiddleware from "./app/middlewares/auth";
+import inertia from "./app/middleware/inertia";
+import authMiddleware from "./app/middleware/auth";
 import Web from "./routes";
 import express from "ultimate-express";
 import cors from 'cors';

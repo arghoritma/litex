@@ -5,7 +5,7 @@
  */
 
 import DB from "./DB";
-import { Request, Response } from "../../type";
+import { Request, Response } from "../../types";
 import { randomUUID, pbkdf2Sync, randomBytes } from "crypto";
 import { signToken, verifyToken } from "../services/Jwt"
 

@@ -1,4 +1,4 @@
-import { Response, Request } from "../../type";
+import { Response, Request } from "../../types";
 import { view } from "../services/View";
 import ViteManifest from "../services/ViteManifest";
 

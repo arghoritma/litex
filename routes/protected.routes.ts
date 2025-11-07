@@ -1,6 +1,6 @@
 import { Router } from "ultimate-express";
 import AuthController from "../app/controllers/AuthController";
-import Auth from "../app/middlewares/auth"
+import Auth from "../app/middleware/auth"
 
 const Route = Router();
 
@@ -9,7 +9,5 @@ Route.get("/profile", Auth, AuthController.profilePage);
 Route.post("/change-profile", Auth, AuthController.changeProfile);
 Route.post("/change-password", Auth, AuthController.changePassword);
 Route.delete("/users", Auth, AuthController.deleteUsers);
-
-
 
 export default Route;

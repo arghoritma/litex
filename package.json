@@ -1,6 +1,6 @@
 {
   "name": "litex",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "LiteX (Lite Express) is a high-performance TypeScript web framework combining Ultimate Express, Svelte 5, and Inertia.js for building modern full-stack applications. Features server-side rendering, real-time capabilities, and seamless client-server state management.",
   "main": "server.ts",
   "scripts": {

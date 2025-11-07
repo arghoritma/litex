@@ -1,4 +1,4 @@
-import { Response, Request } from "../../type";
+import { Response, Request } from "../../types";
 import fs from "fs";
 import { view } from "../services/View";
 

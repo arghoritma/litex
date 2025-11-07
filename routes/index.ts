@@ -2,8 +2,8 @@ import HomeController from "../app/controllers/HomeController";
 import AssetController from "../app/controllers/AssetController";
 import { Router } from 'ultimate-express';
 
-import AuthRoutes from './authRoutes';
-import ProtectedRoutes from './protectedRoutes';
+import AuthRoutes from './auth.routes';
+import ProtectedRoutes from './protected.routes';
 import ApiRoutes from './api'
 const Route = Router();
 

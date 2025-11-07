@@ -4,7 +4,7 @@ import { redirectParamsURL } from "../services/GoogleAuth";
 import axios from "axios";
 import dayjs from "dayjs";
 import Mailer from "../services/Mailer";
-import { Response, Request } from "../../type";
+import { Response, Request } from "../../types";
 import { randomUUID } from "crypto";
 
 class AuthController {
@@ -417,6 +417,7 @@ Link ini akan kadaluarsa dalam 24 jam.`,
          await Authenticate.logout(request, response);
       }
    }
+
 }
 
 export default new AuthController();
