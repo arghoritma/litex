@@ -8,7 +8,7 @@ export interface Response extends Response {
 
 export interface Request extends Request {
     user: {
-        id: number;
+        id: string;
         name: string;
         email: string;
         phone: string;
@@ -19,7 +19,7 @@ export interface Request extends Request {
     share: {
         authMethod: any;
         user: {
-            id: number;
+            id: string;
             name: string;
             email: string;
             phone: string;
