@@ -4,10 +4,9 @@
  * session management, and login/logout functionality.
  */
 
-import DB from "./DB";
-import { Request, Response } from "../../types";
 import { randomUUID, pbkdf2Sync, randomBytes } from "crypto";
 import { signToken, verifyToken } from "../services/Jwt"
+import { db } from '../services/NativeDB'
 
 // PBKDF2 configuration
 const ITERATIONS = 100000;
@@ -69,7 +68,7 @@ class ApiAutenticate {
   async process(user) {
     const token = randomUUID();
 
-    await DB.table("sessions").insert({
+    db('sessions').insert({
       id: token,
       user_id: user.id,
       user_agent: user._agent,
@@ -94,7 +93,7 @@ class ApiAutenticate {
     const payload = verifyToken(token);
 
     if (payload) {
-      await DB.from("sessions").where("id", payload.id).delete();
+      db('sessions').where("id", payload.id).delete();
     }
 
     return ({ success: true, message: "Logout successful" });
