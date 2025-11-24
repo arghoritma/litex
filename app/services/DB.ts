@@ -37,7 +37,7 @@ interface DBType extends Knex {
  * const stagingDB = DB.connection('staging');
  * const products = await stagingDB('products').select('*');
  */
-let DB = DBInstance(config[process.env.DB_CONNECTION]) as DBType;
+let DB = DBInstance(config[process.env.NODE_ENV]) as DBType;
 
 /**
  * Method to create a new database connection for a specific stage
