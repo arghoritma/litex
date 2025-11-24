@@ -19,7 +19,7 @@
             error = errors.message; // Menampilkan pesan error dari server
           }
         },
-      }
+      },
     );
   }
 </script>

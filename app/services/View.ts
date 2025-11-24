@@ -4,7 +4,7 @@
  * It uses Squirrelly as the templating engine and supports hot reloading in development.
  */
 
-import { readFileSync, readdirSync, statSync } from "fs";
+import { readFileSync, readdirSync, statSync, existsSync } from "fs";
 import * as Sqrl from "squirrelly";
 import path from "path";
 require("dotenv").config();
@@ -21,7 +21,11 @@ let html_files = {} as {
 let directory = "resources/views";
 if (process.env.NODE_ENV === "production") {
    // In production (built), views are in build/views
-   directory = "views";
+   if (existsSync("build/views")) {
+      directory = "build/views";
+   } else {
+      directory = "views";
+   }
 }
 
 // Set up file watcher for hot reloading in development

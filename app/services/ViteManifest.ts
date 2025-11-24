@@ -20,13 +20,14 @@ class ViteManifestService {
 
   constructor() {
     // Try build directory first (production), then dist (development build)
-    const buildManifestPath = resolve(process.cwd(), ".vite/manifest.json");
+    const buildManifestPath = resolve(process.cwd(), "build/.vite/manifest.json");
     const distManifestPath = resolve(process.cwd(), "dist/.vite/manifest.json");
 
     this.manifestPath = existsSync(buildManifestPath) ? buildManifestPath : distManifestPath;
 
     // Check if manifest exists to determine production mode
-    this.isDev = process.env.NODE_ENV !== "production" && !existsSync(this.manifestPath);
+    const env = (process.env.NODE_ENV || "").trim();
+    this.isDev = env !== "production";
 
   }
 
@@ -64,7 +65,10 @@ class ViteManifestService {
       // In dev mode, return dev server URLs
       const vitePort = process.env.VITE_PORT || "5173";
       return {
-        js: [`http://localhost:${vitePort}/js/main.js`],
+        js: [
+          `http://localhost:${vitePort}/@vite/client`,
+          `http://localhost:${vitePort}/js/main.js`
+        ],
         css: [],
       };
     }

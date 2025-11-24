@@ -18,6 +18,9 @@ server.use(express.urlencoded({ extended: true })); // Add URL-encoded body pars
 
 // Serve static files from public folder
 server.use(express.static('public'));
+if (process.env.NODE_ENV === 'production') {
+   server.use(express.static('build'));
+}
 server.use(authMiddleware); // Add auth middleware
 server.use(inertia());
 server.use(Routes);
