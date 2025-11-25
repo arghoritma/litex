@@ -4,6 +4,7 @@ import Routes from "./routes";
 import express from "ultimate-express";
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import DB from "./app/services/DB";
 
 require("dotenv").config();
 
@@ -38,11 +39,23 @@ server.use((err: any, req: any, res: any, next: any) => {
    res.json(err);
 });
 
+(async () => {
+   if (process.env.AUTO_MIGRATE === "true") {
+      try {
+         await DB.migrate.latest();
+         console.log(`⚙️ Database migrated successfully`);
+      } catch (error) {
+         console.log(`⚙️ Database migration failed : ${error}`);
+         process.exit(1);
+      }
+   }
+})();
+
+
 server.listen(PORT, () => {
    console.log(`🚀 LiteX  Server running at http://localhost:${PORT}`);
    console.log(`⚡ Environment: ${process.env.NODE_ENV || 'development'}`);
    console.log(`🌟 Ready to serve requests!`);
-
 });
 
 process.on("SIGTERM", () => {

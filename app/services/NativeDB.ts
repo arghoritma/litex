@@ -1,9 +1,9 @@
 import SqliteDriver from './NativeDriver';
 require("dotenv").config();
 
-// Path database (sesuaikan dengan struktur folder Anda)
-// Pastikan path ini benar relatif terhadap root project
-const NativeDB = new SqliteDriver('./db/' + process.env.NODE_ENV + '.sqlite3');
+
+const DB_PATH_NAME = process.env.NODE_ENV === 'development' ? './db/development' : process.env.DB_FILENAME;
+const NativeDB = new SqliteDriver(DB_PATH_NAME + '.sqlite3');
 
 // Helper function dengan Generic Type <T>
 // Ini kuncinya agar di controller kita bisa ketik db<User>('users')

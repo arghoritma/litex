@@ -7,10 +7,9 @@
     "dev": "cls && npx concurrently --raw \"npm run dev:vite\" \"npm run dev:server\"",
     "dev:server": "tsx watch server.ts",
     "dev:vite": "vite > nul 2>&1",
-    "clean": "if exist build rmdir /s /q build && if exist dist rmdir /s /q dist",
-    "build": "npm run clean && set NODE_ENV=production && vite build && tsc && xcopy /s /e /i dist build && xcopy /s /e /i public build && xcopy /s /e /i resources\\views build\\views",
-    "postbuild": "node sync_version",
-    "start": "set NODE_ENV=production&& node build/server.js"
+    "clean": "rimraf build dist",
+    "build": "npm run clean && cross-env NODE_ENV=production && vite build && tsc && shx cp -r dist/* build/ && shx cp -r public/* build/ && shx cp -r resources/views build/",
+    "start": "cross-env NODE_ENV=production node build/server.js"
   },
   "author": "Abdul Rojak",
   "license": "ISC",
@@ -40,6 +39,9 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.9",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^10.1.0",
+    "rimraf": "^6.1.2",
+    "shx": "^0.4.0",
     "svelte": "^5.0.0-next.272",
     "svelte-loader": "^3.2.4",
     "tailwindcss": "^3.4.14",

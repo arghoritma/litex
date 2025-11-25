@@ -1,4 +1,5 @@
 import type { Knex } from "knex";
+require("dotenv").config();
 
 const config: { [key: string]: Knex.Config } = {
   development: {
@@ -12,7 +13,7 @@ const config: { [key: string]: Knex.Config } = {
   production: {
     client: "better-sqlite3",
     connection: {
-      filename: "./db/production.sqlite3"
+      filename: `${process.env.DB_FILENAME}.sqlite3`
     },
     useNullAsDefault: true
   },
