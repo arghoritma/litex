@@ -32,7 +32,7 @@ const inertia = () => {
 
             const html = await view("inertia.html", {
                page: JSON.stringify(inertiaObject),
-               title: process.env.TITLE || "LAJU - Ship Your Next Project Faster",
+               title: process.env.TITLE || "LITEX - Ship Your Next Project Faster",
                jsFiles: assets.js,
                cssFiles: assets.css,
             });
